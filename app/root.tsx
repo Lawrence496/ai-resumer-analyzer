@@ -7,12 +7,17 @@ import {
   ScrollRestoration,
 } from "react-router";
 
-import type { Route } from "./+types/root";
 import "./app.css";
 import { useEffect } from "react";
-import { usePuterStore } from "~/lib/puter"
+import { usePuterStore } from "~/lib/puter";
 
-export const links: Route.LinksFunction = () => [
+type LinkDescriptor = {
+  rel: string;
+  href: string;
+  crossOrigin?: string;
+};
+
+export const links = (): LinkDescriptor[] => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
     rel: "preconnect",
@@ -53,7 +58,7 @@ export default function App() {
   return <Outlet />;
 }
 
-export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
+export function ErrorBoundary({ error }: { error: unknown }) {
   let message = "Oops!";
   let details = "An unexpected error occurred.";
   let stack: string | undefined;
